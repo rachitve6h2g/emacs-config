@@ -3,6 +3,22 @@
 ;;(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 ;;(package-initialize)
 
+;; Enable clipboard
+(setq select-enable-clipboard t)
+(setq select-enable-primary t)
+
+(setq interprogram-cut-function
+      (lambda (text)
+	(let ((process-connection-type nil))
+	  (let ((proc (start-process "wl-copy" "*Messages*" "wl-copy")))
+	    (process-send-string proc text)
+	    (process-send-eof proc)))))
+      
+
+(setq interprogram-paste-function
+      (lambda ()
+	(shell-command-to-string "wl-paste -n || true")))
+
 ;; Treesitter setting.
 (setq treesit-font-lock-level 4)
 ;;(setq major-mode-remap-alist
@@ -17,9 +33,9 @@
 ;; Use the magit package
 (use-package magit)
 
-(set-face-attribute 'default nil :family "Maple Mono NF" :height 130)
-(set-face-attribute 'fixed-pitch nil :font "Maple Mono NF")
-(set-face-attribute 'variable-pitch nil :font "Maple Mono NF")
+(set-face-attribute 'default nil :family "Iosevka Nerd Font" :height 135)
+(set-face-attribute 'fixed-pitch nil :font "Iosevka Nerd Font")
+(set-face-attribute 'variable-pitch nil :font "Iosevka Nerd Font")
 
 ;; For ligature support
 (use-package ligature
@@ -179,3 +195,8 @@
 (setq kdeconnect-devices '(("My Cellphone" . "a2af3bf8_67c3_4a4f_ba4e_295f0c437bc0")))
 (setq kdeconnect-active-device '("My Cellphone" . "a2af3bf8_67c3_4a4f_ba4e_295f0c437bc0"))
 
+;; Org-roam settings
+(make-directory "~/org-roam")
+(setq org-roam-directory (file-truename "~/org-roam"))
+(setq find-file-visit-truename t)
+(org-roam-db-autosync-mode)
