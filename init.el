@@ -103,9 +103,11 @@
 
 ;; Magit config
 (use-package magit
-  :commands (magit-status magit-get-current-branch)
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+
+;; Set up magit forge for recieving git issues
+(use-package forge)
 
 ;;--BY ME--;;
 ;; Ligature set up for JetBrainsMono Nerd Font
@@ -131,5 +133,3 @@
 ;; Another way to do this is using use-package's bind function
 (use-package vterm
   :bind ("C-c C-v" . 'vterm))
-
- 
